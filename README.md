@@ -2,17 +2,19 @@
 DAG
 ![dag](https://user-images.githubusercontent.com/121276417/214596355-4a16a2d7-d76a-4288-a1d0-b0cdaa423152.png)
 
+## MongoDB ##
+
 ### 1st query ###
 
 db.tik_tok.find({}, {"_id":0, "content":1, "thumbsUpCount":1, "score":1}).sort({"thumbsUpCount":-1}).limit(5).pretty()
 
-#### Output: ####
-
+### Output: ###
+```json
 {
         "content" : "I love TikTok. However, I've recently had a lot of issues. First, I couldn't use all the filters. I kept getting notifications that the filter couldn't be used on my phone. I can use them all now, but now the captions are messed up. Other reviews say the captions don't show up at all, but I get double captions! It's infuriating. I've tried turning them off under accessibility, but that does nothing.",
         "score" : 3,
         "thumbsUpCount" : 20102
-}
+} 
 {
         "content" : "faxing didn't break any kind of TikTok cummunty guidelines I think someone peoples flagged my videos please review my account again and fix it as soon as possible",
         "score" : 1,
@@ -33,14 +35,15 @@ db.tik_tok.find({}, {"_id":0, "content":1, "thumbsUpCount":1, "score":1}).sort({
         "score" : 1,
         "thumbsUpCount" : 10206
 }
+```
 
 
 ### 2nd query ###
 
 db.tik_tok.find({$expr: {$lt: [{ $strLenCP: "$content"}, 5]}}).pretty()
 
-#### Output: ####
-
+### Output: ###
+```json
 {
         "_id" : ObjectId("63d111789ca56cd38aa21748"),
         "reviewId" : "gp:AOqpTOFOKOxBKWDbUjaoQml2UEqeVgQkcZ84CAPnb6QhkhAr4ZPzN7Uk-LEFPiadIkyIdTbTyDPJD68_rnHZKw",
@@ -80,31 +83,31 @@ db.tik_tok.find({$expr: {$lt: [{ $strLenCP: "$content"}, 5]}}).pretty()
         "replyContent" : "-",
         "repliedAt" : "-"
 }
-
+```
 
 ### 3rd query ###
 
 db.tik_tok.aggregate([{$project: {score: 1, date: { $substr: ["$at", 0, 10]}}}, {"$group": {_id: "$date", score:{$avg: "$score"}}}])
 
-#### Output: ####
+### Output: ###
 
-{ "_id" : "2022-02-28", "score" : 4.2766515621273555 }
-{ "_id" : "2022-03-01", "score" : 4.342850818946436 }
-{ "_id" : "2022-02-24", "score" : 4.343116883116883 }
-{ "_id" : "2022-03-22", "score" : 4.355066771406127 }
-{ "_id" : "2022-03-17", "score" : 4.294638694638695 }
-{ "_id" : "2022-03-05", "score" : 4.308592835401545 }
-{ "_id" : "2022-01-30", "score" : 4.320466321243523 }
-{ "_id" : "2022-03-04", "score" : 4.349529003470501 }
-{ "_id" : "2022-03-14", "score" : 4.289981972701519 }
-{ "_id" : "2022-01-22", "score" : 4.337181337181337 }
-{ "_id" : "2022-03-23", "score" : 4.297648211660951 }
-{ "_id" : "2022-03-31", "score" : 4.318956611570248 }
-{ "_id" : "2022-02-10", "score" : 4.2653118825853795 }
-{ "_id" : "2022-01-28", "score" : 4.355549358616844 }
-{ "_id" : "2022-01-25", "score" : 4.305135951661631 }
-{ "_id" : "2022-03-26", "score" : 4.3132730732635585 }
-{ "_id" : "2022-02-26", "score" : 4.298309178743962 }
-{ "_id" : "2022-03-13", "score" : 4.31335952848723 }
-{ "_id" : "2022-01-29", "score" : 4.309254498714653 }
-{ "_id" : "2022-03-08", "score" : 4.306001481847369 }
+{ "_id" : "2022-02-28", "score" : 4.2766515621273555 }</br>
+{ "_id" : "2022-03-01", "score" : 4.342850818946436 }</br>
+{ "_id" : "2022-02-24", "score" : 4.343116883116883 }</br>
+{ "_id" : "2022-03-22", "score" : 4.355066771406127 }</br>
+{ "_id" : "2022-03-17", "score" : 4.294638694638695 }</br>
+{ "_id" : "2022-03-05", "score" : 4.308592835401545 }</br>
+{ "_id" : "2022-01-30", "score" : 4.320466321243523 }</br>
+{ "_id" : "2022-03-04", "score" : 4.349529003470501 }</br>
+{ "_id" : "2022-03-14", "score" : 4.289981972701519 }</br>
+{ "_id" : "2022-01-22", "score" : 4.337181337181337 }</br>
+{ "_id" : "2022-03-23", "score" : 4.297648211660951 }</br>
+{ "_id" : "2022-03-31", "score" : 4.318956611570248 }</br>
+{ "_id" : "2022-02-10", "score" : 4.2653118825853795 }</br>
+{ "_id" : "2022-01-28", "score" : 4.355549358616844 }</br>
+{ "_id" : "2022-01-25", "score" : 4.305135951661631 }</br>
+{ "_id" : "2022-03-26", "score" : 4.3132730732635585 }</br>
+{ "_id" : "2022-02-26", "score" : 4.298309178743962 }</br>
+{ "_id" : "2022-03-13", "score" : 4.31335952848723 }</br>
+{ "_id" : "2022-01-29", "score" : 4.309254498714653 }</br>
+{ "_id" : "2022-03-08", "score" : 4.306001481847369 }</br>
